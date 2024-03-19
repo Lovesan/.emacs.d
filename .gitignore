@@ -1,0 +1,17 @@
+all-the-icons-fonts/
+auto-save-list/
+eln-cache/
+elpa/
+semanticdb/
+transient/
+undo/
+ac-comphist.dat
+network-security.data
+*.ecl
+.vs/
+.vscode/
+*~
+\#*\#
+*.swp
+*.swo
+*.log
