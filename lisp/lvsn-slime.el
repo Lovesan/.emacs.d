@@ -139,8 +139,11 @@
 
 (defun lvsn-revert-to-repl ()
   (interactive)
-  (let ((slime-buf "*slime-repl sbcl*"))
-    (if (string= (buffer-name) slime-buf)
+  (let ((slime-buf (cl-loop for buf in (buffer-list)
+                            for name = (buffer-name buf)
+                            when (string-prefix-p "*slime-repl " name)
+                            return buf)))
+    (if (eq (current-buffer) slime-buf)
         (mode-line-other-buffer)
         (switch-to-buffer slime-buf))))
 
