@@ -26,7 +26,7 @@
 
 ;;; Uncomment to change the executable name,
 ;;;  in case you are using different Common Lisp implementation
-;; (setq lvsn-lisp-progam "sbcl")
+;; (setq lvsn-lisp-program "sbcl")
 
 ;;; Uncomment in case you want to disable syntax etc. for bike library
 ;; (setq lvsn-bike-extensions nil)
