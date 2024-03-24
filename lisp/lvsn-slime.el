@@ -51,7 +51,8 @@
                             slime-mdot-fu
                             slime-asdf
                             slime-sbcl-exts
-                            slime-quicklisp))
+                            slime-quicklisp
+                            slime-scratch))
              (setq slime-load-failed-fasl 'always)
              (setq slime-net-coding-system 'utf-8-unix)
              (setq lisp-indent-function 'common-lisp-indent-function)
