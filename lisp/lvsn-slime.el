@@ -111,21 +111,26 @@
 
 (defvar lvsn--slime-was-open nil)
 
-(defun lvsn-init-slime-windows ()
+(defun lvsn--find-repl-buffer ()
+  (cl-loop for buf in (buffer-list)
+           for name = (buffer-name buf)
+           when (string-prefix-p "*slime-repl " name)
+           return buf))
+
+(defun lvsn--init-slime-windows (arg)
   "Opens a scratch file in a new pane"
-  (interactive)
   (unless lvsn--slime-was-open
-    (dolist (buf (buffer-list))
-      (let ((name (buffer-name buf)))
-        (when (string= name "*inferior-lisp*")
-          (setq lvsn--slime-was-open t)
-          (let ((wnd (get-buffer-window buf)))
-            (cond (wnd (select-window wnd))
-                  (t (switch-to-buffer buf)))
+    (let ((buf (lvsn--find-repl-buffer)))
+      (when buf
+        (let ((wnd (get-buffer-window buf)))
+          (when wnd
+            (setq lvsn--slime-was-open t)
+            (select-window wnd)
             (delete-other-windows)
             (split-window-horizontally)
             (lvsn--open-scratch-file)
-            (neotree)))))))
+            (neotree)
+            (redisplay t)))))))
 
 (defun lvsn-slime-edit-definition ()
   (interactive)
@@ -140,10 +145,7 @@
 
 (defun lvsn-revert-to-repl ()
   (interactive)
-  (let ((slime-buf (cl-loop for buf in (buffer-list)
-                            for name = (buffer-name buf)
-                            when (string-prefix-p "*slime-repl " name)
-                            return buf)))
+  (let ((slime-buf (lvsn--find-repl-buffer)))
     (if (eq (current-buffer) slime-buf)
         (mode-line-other-buffer)
         (switch-to-buffer slime-buf))))
@@ -215,7 +217,7 @@
    t))
 
 (add-hook 'slime-mode-hook 'lvsn-add-slime-highlighting)
-(add-hook 'buffer-list-update-hook 'lvsn-init-slime-windows)
+(add-to-list 'window-buffer-change-functions 'lvsn--init-slime-windows)
 
 (defvar lvsn-bike-extensions t
   "Whether to enable additional syntax for bike library.")
