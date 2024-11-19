@@ -24,6 +24,11 @@
 (require 'package)
 (require 'use-package)
 
+(setq custom-file "~/.emacs.d/custom.el")
+
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;;; Configure package manager URL
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 

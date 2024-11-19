@@ -170,8 +170,12 @@
                                       "without-"
                                       "do-")
                                     nil))
+      (misc-defines-regex (regexp-opt '("defvop"
+                                        "definline")
+                                      'symbols))
       (symbol-regex "\\(\\(?:\\w\\|\\s_\\)+\\)")
-      (symbol-regex-nocapture "\\(?:\\(?:\\w\\|\\s_\\)+\\)"))
+      (symbol-regex-nocapture "\\(?:\\(?:\\w\\|\\s_\\)+\\)")
+      )
   (setq lvsn-package-prefix-regex
         (concat "(" symbol-regex "\\:"))
   (setq lvsn-qualified-defglobal-regex
@@ -188,6 +192,12 @@
         (concat "(" symbol-regex "\\:\\(" misc-macro-regex symbol-regex-nocapture "\\)\\>"))
   (setq lvsn-unqualified-misc-macro-regex
         (concat "(\\(" misc-macro-regex symbol-regex-nocapture "\\)\\>"))
+  (setq lvsn-constant-regex
+        (concat "\\_<\\([+]" symbol-regex-nocapture "[+]\\)\\_>"))
+  (setq lvsn-global-regex
+        (concat "\\_<\\([-]" symbol-regex-nocapture "[-]\\)\\_>"))
+  (setq lvsn-misc-defines-regex
+        (concat "(" misc-defines-regex spaces-regex))
   t)
 
 (defun lvsn-add-slime-highlighting ()
@@ -213,7 +223,13 @@
      (,lvsn-unqualified-misc-macro-regex
       (1 font-lock-keyword-face))
      (,lvsn-package-prefix-regex
-      (1 font-lock-type-face)))
+      (1 font-lock-type-face))
+     (,lvsn-constant-regex
+      (1 font-lock-variable-name-face))
+     (,lvsn-global-regex
+      (1 font-lock-variable-name-face))
+     (,lvsn-misc-defines-regex
+      (1 font-lock-keyword-face)))
    t))
 
 (add-hook 'slime-mode-hook 'lvsn-add-slime-highlighting)

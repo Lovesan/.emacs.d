@@ -15,3 +15,5 @@ network-security.data
 *.swp
 *.swo
 *.log
+/
+/custom.el
