@@ -197,7 +197,9 @@
   (setq lvsn-global-regex
         (concat "\\_<\\([-]" symbol-regex-nocapture "[-]\\)\\_>"))
   (setq lvsn-misc-defines-regex
-        (concat "(" misc-defines-regex spaces-regex))
+        (concat "(" misc-defines-regex spaces-regex "+"))
+  (setq lvsn-misc-defines-regex-full
+        (concat "(" misc-defines-regex spaces-regex "+" symbol-regex "\\_>"))
   t)
 
 (defun lvsn-add-slime-highlighting ()
@@ -229,7 +231,10 @@
      (,lvsn-global-regex
       (1 font-lock-variable-name-face))
      (,lvsn-misc-defines-regex
-      (1 font-lock-keyword-face)))
+      (1 font-lock-keyword-face))
+     (,lvsn-misc-defines-regex-full
+      (1 font-lock-keyword-face)
+      (2 font-lock-function-name-face)))
    t))
 
 (add-hook 'slime-mode-hook 'lvsn-add-slime-highlighting)
