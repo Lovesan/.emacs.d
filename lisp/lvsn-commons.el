@@ -23,6 +23,7 @@
 (require 'ibuffer)
 (require 'package)
 (require 'use-package)
+(require 'hideshow)
 
 (setq custom-file "~/.emacs.d/custom.el")
 
@@ -34,6 +35,10 @@
 
 ;;; Initialize package manager
 (package-initialize)
+
+(use-package hideshowvis
+             :demand t
+             :ensure t)
 
 ;;; Undo history
 (use-package undo-tree
@@ -236,5 +241,7 @@ Exempt major modes are defined in `display-line-numbers-exempt-modes'."
     (display-line-numbers-mode)))
 
 (global-display-line-numbers-mode)
+
+(define-fringe-bitmap 'hideshowvis-hideable-marker [0 0 #xFF #xFF #xFF 0 0])
 
 (provide 'lvsn-commons)

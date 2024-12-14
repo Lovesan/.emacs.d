@@ -179,6 +179,8 @@ Otherwise call FUN with ARGS."
 (define-key slime-mode-map (kbd "<mouse-5>") 'xref-go-forward)
 (define-key slime-mode-map (kbd "<M-up>") 'lispy-backward)
 (define-key slime-mode-map (kbd "<M-down>") 'lispy-flow)
+(define-key slime-mode-map (kbd "C-x m") 'hs-toggle-hiding)
+(define-key slime-mode-map (kbd "C-M-d") 'slime-disassemble-symbol)
 
 (define-key slime-repl-mode-map (kbd "<f1>") 'slime-describe-symbol)
 (define-key slime-repl-mode-map (kbd "<f3>") 'slime-apropos-all)
@@ -186,6 +188,7 @@ Otherwise call FUN with ARGS."
 (define-key slime-repl-mode-map (kbd "<C-mouse-1>") 'lvsn-slime-edit-definition)
 (define-key slime-repl-mode-map (kbd "<mouse-4>") 'slime-pop-find-definition-stack)
 (define-key slime-repl-mode-map (kbd "<mouse-5>") 'xref-go-forward)
+(define-key slime-repl-mode-map (kbd "C-M-d") 'slime-disassemble-symbol)
 
 (provide 'lvsn-keys)
 

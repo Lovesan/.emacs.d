@@ -202,7 +202,7 @@
         (concat "(" misc-defines-regex spaces-regex "+" symbol-regex "\\_>"))
   t)
 
-(defun lvsn-add-slime-highlighting ()
+(defun lvsn--add-slime-highlighting ()
   (font-lock-add-keywords
    nil
    `((,lvsn-qualified-defglobal-regex
@@ -237,7 +237,7 @@
       (2 font-lock-function-name-face)))
    t))
 
-(add-hook 'slime-mode-hook 'lvsn-add-slime-highlighting)
+(add-hook 'slime-mode-hook 'lvsn--add-slime-highlighting)
 (add-to-list 'window-buffer-change-functions 'lvsn--init-slime-windows)
 
 (defvar lvsn-bike-extensions t
@@ -250,6 +250,16 @@
 
 (defvar lvsn-start-slime t
   "Whether to start SLIME on startup")
+
+(defun lvsn--enable-hs ()
+  (hs-minor-mode t)
+  (hideshowvis-enable))
+
+(add-hook 'slime-mode-hook 'lvsn--enable-hs)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((lisp . t)))
 
 (provide 'lvsn-slime)
 
